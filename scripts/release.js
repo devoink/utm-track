@@ -53,9 +53,41 @@ function doRelease(version, tag) {
   console.log('  ✓ Release 已触发：' + tag);
   console.log('    GitHub 将自动创建 Release 并上传构建产物。');
   console.log(SEP);
-  console.log('\n  如需发布到 npm，请执行：\n');
-  console.log('    npm publish\n');
-  console.log('  （预发版可加标签，例如：npm publish --tag alpha）\n');
+  promptNpmPublish(version);
+}
+
+function promptNpmPublish(version) {
+  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+  const isPreRelease = version.includes('-');
+  const suggestedTag = (version.match(/-([a-zA-Z0-9]+)/) || [])[1] || 'alpha';
+
+  console.log('');
+  rl.question('  是否发布到 npm？ [Y/n]: ', (ans1) => {
+    const go = (ans1 || '').trim().toLowerCase() !== 'n';
+    if (!go) {
+      console.log('\n  已跳过 npm 发布。\n');
+      rl.close();
+      return;
+    }
+    console.log('');
+    console.log('  发布类型：');
+    console.log('    1) 正式版  - npm publish');
+    console.log('    2) 预发版  - npm publish --tag ' + suggestedTag + (isPreRelease ? '  [推荐]' : ''));
+    console.log('');
+    const def = isPreRelease ? '2' : '1';
+    rl.question('  请选择 (1/2，直接回车为 ' + (isPreRelease ? '2' : '1') + '): ', (ans2) => {
+      const choice = (ans2 || '').trim() || def;
+      const cmd = choice === '2' ? 'npm publish --tag ' + suggestedTag : 'npm publish';
+      console.log('\n  执行: ' + cmd + '\n');
+      rl.close();
+      try {
+        run(cmd);
+        console.log('\n  ✓ npm 发布完成。\n');
+      } catch (err) {
+        console.error('\n  ✗ npm 发布失败，可稍后手动执行: ' + cmd + '\n');
+      }
+    });
+  });
 }
 
 function promptTagExists(currentVersion, tag) {
