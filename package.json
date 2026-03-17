@@ -6,9 +6,20 @@
   "module": "dist/utm-track.esm.js",
   "unpkg": "dist/utm-track.umd.min.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/utm-track.esm.js",
+      "require": "./dist/utm-track.umd.min.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "files": [
     "dist"
   ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "build": "npx tsc --emitDeclarationOnly && npx rollup -c && npx terser dist/utm-track.umd.js -o dist/utm-track.umd.min.js -c -m",
     "build:watch": "npx rollup -c -w",

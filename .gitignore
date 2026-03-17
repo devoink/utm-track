@@ -3,6 +3,11 @@ node_modules/
 
 # Build output
 dist/
+*.tsbuildinfo
+
+# Test / coverage
+coverage/
+.nyc_output/
 
 # Logs & debug
 npm-debug.log*
@@ -20,4 +25,5 @@ Thumbs.db
 
 # Env
 .env
-.env.local
+.env.*
+!.env.example

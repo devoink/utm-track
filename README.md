@@ -1,6 +1,6 @@
 # utm-track
 
-[![npm version](https://img.shields.io/npm/v/utm-track.svg)](https://www.npmjs.com/package/utm-track) [![GitHub](https://img.shields.io/badge/GitHub-devoink%2Futm--track-blue)](https://github.com/devoink/utm-track)
+[![npm version](https://img.shields.io/npm/v/utm-track.svg)](https://www.npmjs.com/package/utm-track) [![GitHub](https://img.shields.io/badge/GitHub-devoink%2Futm--track-blue)](https://github.com/devoink/utm-track) [![Pages](https://github.com/devoink/utm-track/actions/workflows/pages.yml/badge.svg)](https://github.com/devoink/utm-track/actions/workflows/pages.yml) [![Release](https://github.com/devoink/utm-track/actions/workflows/release.yml/badge.svg)](https://github.com/devoink/utm-track/actions/workflows/release.yml)
 
 落地页 UTM / 推广参数持久化库，支持 **LocalStorage 与 Cookie 双写**、**first / last 归因策略**，站内跳转不丢失；捕获时若已过期会先清除旧数据再写入，`clear()` 为强制清空。
 
