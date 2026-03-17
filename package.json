@@ -1,6 +1,6 @@
 {
   "name": "utm-track",
-  "version": "0.0.3-alpha",
+  "version": "0.0.4-alpha",
   "description": "Landing page UTM / promo params persistence with LocalStorage + Cookie dual-write, first/last touch strategy",
   "main": "dist/utm-track.esm.js",
   "module": "dist/utm-track.esm.js",
