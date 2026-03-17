@@ -1,8 +1,10 @@
 # utm-track
 
+[![npm version](https://img.shields.io/npm/v/utm-track.svg)](https://www.npmjs.com/package/utm-track) [![GitHub](https://img.shields.io/badge/GitHub-devoink%2Futm--track-blue)](https://github.com/devoink/utm-track)
+
 落地页 UTM / 推广参数持久化库，支持 **LocalStorage 与 Cookie 双写**、**first / last 归因策略**，站内跳转不丢失；捕获时若已过期会先清除旧数据再写入，`clear()` 为强制清空。
 
-**仓库**: [GitHub](https://github.com/devoink/utm-track)
+**仓库**: [GitHub](https://github.com/devoink/utm-track) · **在线示例**: [GitHub Pages](https://devoink.github.io/utm-track/)
 
 ## 功能概览
 
@@ -220,43 +222,13 @@ LocalStorage 与 Cookie 存同一份 JSON：
 
 ## 本地开发与调试
 
-仓库内提供示例页面，便于本地验证行为。
-
-### 1. 构建
+推荐直接使用 [在线示例](https://devoink.github.io/utm-track/) 体验。本地调试可执行：
 
 ```bash
-npm install
-npm run build
+npm install && npm run build && npm run dev
 ```
 
-### 2. 打开示例页
-
-用本地静态服务打开项目根目录（避免 file 协议下部分行为不一致），例如：
-
-```bash
-npx serve . -p 3000
-# 或一键构建并启动：npm run example
-```
-
-**开发时支持热刷新**（改示例页或 dist 后自动刷新浏览器）：
-
-```bash
-# 首次先构建一次，生成 dist
-npm run build
-# 启动带 live reload 的服务器，默认打开示例页
-npm run dev
-```
-
-修改 `examples/index.html` 或重新执行 `npm run build` 后，浏览器会自动刷新。若在改 `src/` 源码，可另开终端执行 `npm run build:watch`，保存后会自动打包，live-server 检测到 dist 变化也会刷新页面。
-
-浏览器访问：
-
-- **带 UTM 的落地页**：  
-  http://localhost:3000/examples/index.html?utm_source=google&utm_medium=cpc&utm_campaign=test  
-- **站内页（无参数）**：  
-  http://localhost:3000/examples/index.html  
-
-示例页会展示：当前 URL、是否本次写入、当前存储内容、以及「模拟落地 URL」「读取」「强制清空」等按钮，方便调试 first/last、过期、清空等逻辑。在线演示见 [GitHub Pages](https://devoink.github.io/utm-track/)。
+浏览器会打开示例页并支持热刷新。带 UTM 测试可在 URL 后加 `?utm_source=google&utm_medium=cpc` 等参数。
 
 ---
 
