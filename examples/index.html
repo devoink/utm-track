@@ -50,6 +50,10 @@
         padding-bottom: 20px;
         border-bottom: 1px solid var(--card-border);
       }
+      header a:hover {
+        color: var(--primary-hover);
+        text-decoration: underline;
+      }
       h1 {
         font-size: 1.5rem;
         font-weight: 600;
@@ -389,6 +393,9 @@
           UtmTrack 是一个用于落地页 UTM/推广参数持久化的库，支持 LocalStorage + Cookie 双写，first/last
           归因，站内跳转不丢失。
         </p>
+        <p class="sub" style="margin-top: 8px;">
+          <a href="https://github.com/devoink/utm-track" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: none;">GitHub 仓库 →</a>
+        </p>
       </header>
 
       <div class="main-layout">
@@ -602,7 +609,7 @@ if (promo) {
 
               <p class="doc-link">
                 右侧为本库的可交互演示。完整 API、清空/自定义参数/仅用 LS 等见
-                <a href="../README.md" target="_blank" rel="noopener">README.md</a>。
+                <a href="https://github.com/devoink/utm-track#readme" target="_blank" rel="noopener noreferrer">README.md</a>。
               </p>
             </div>
           </section>

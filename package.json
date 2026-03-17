@@ -29,6 +29,14 @@
   ],
   "author": "devo<devo@devo.ink>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devoink/utm-track.git"
+  },
+  "homepage": "https://github.com/devoink/utm-track#readme",
+  "bugs": {
+    "url": "https://github.com/devoink/utm-track/issues"
+  },
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.6",

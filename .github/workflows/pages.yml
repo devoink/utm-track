@@ -5,6 +5,14 @@ name: Pages
 on:
   push:
     branches: [main]
+    paths:
+      - "examples/**"
+      - "src/**"
+      - "package.json"
+      - "package-lock.json"
+      - "rollup.config.mjs"
+      - "tsconfig.json"
+      - ".github/workflows/pages.yml"
 
 permissions:
   contents: read
@@ -31,6 +39,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "24"
+          cache: "npm"
+
+      - name: Restore node_modules cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
 
       - name: Install and build
         run: |

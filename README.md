@@ -2,6 +2,8 @@
 
 落地页 UTM / 推广参数持久化库，支持 **LocalStorage 与 Cookie 双写**、**first / last 归因策略**，站内跳转不丢失；捕获时若已过期会先清除旧数据再写入，`clear()` 为强制清空。
 
+**仓库**: [GitHub](https://github.com/devoink/utm-track)
+
 ## 功能概览
 
 - **双写存储**：同一份数据同时写入 LocalStorage 与 Cookie（可关 Cookie 仅用 LS）
@@ -254,9 +256,7 @@ npm run dev
 - **站内页（无参数）**：  
   http://localhost:3000/examples/index.html  
 
-示例页会展示：当前 URL、是否本次写入、当前存储内容、以及「模拟落地 URL」「读取」「强制清空」等按钮，方便调试 first/last、过期、清空等逻辑。
-
-更多说明见 [examples/README.md](examples/README.md)。
+示例页会展示：当前 URL、是否本次写入、当前存储内容、以及「模拟落地 URL」「读取」「强制清空」等按钮，方便调试 first/last、过期、清空等逻辑。在线演示见 [GitHub Pages](https://devoink.github.io/utm-track/)。
 
 ---
 
