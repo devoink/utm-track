@@ -1,0 +1,907 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>UtmTrack 使用示例</title>
+    <style>
+      :root {
+        --bg: #f6f8fa;
+        --card: #ffffff;
+        --card-border: #d0d7de;
+        --text: #1f2328;
+        --muted: #656d76;
+        --primary: #0969da;
+        --primary-hover: #0550ae;
+        --success: #1a7f37;
+        --danger: #cf222e;
+        --radius: 6px;
+        --shadow: 0 1px 2px rgba(31, 35, 40, 0.04);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        margin: 0;
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+      .wrap {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 24px 24px;
+      }
+      .main-layout {
+        display: grid;
+        grid-template-columns: minmax(440px, 1fr) minmax(400px, 1fr);
+        gap: 28px;
+        align-items: start;
+      }
+      @media (max-width: 920px) {
+        .main-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+      header {
+        margin-bottom: 28px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--card-border);
+      }
+      h1 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0 0 6px 0;
+        color: var(--text);
+      }
+      .sub {
+        font-size: 0.875rem;
+        color: var(--muted);
+      }
+      .sub code {
+        background: #eaeef2;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        color: var(--text);
+        border: 1px solid #d0d7de;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--card-border);
+        border-radius: var(--radius);
+        padding: 18px 20px;
+        margin-bottom: 16px;
+        box-shadow: var(--shadow);
+      }
+      .card h2 {
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin: 0 0 14px 0;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .card h2::before {
+        content: "";
+        width: 3px;
+        height: 14px;
+        background: var(--primary);
+        border-radius: 2px;
+      }
+      label {
+        display: block;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--muted);
+        margin: 12px 0 4px 0;
+      }
+      label:first-of-type {
+        margin-top: 0;
+      }
+      input[type="text"],
+      input[type="number"],
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid var(--card-border);
+        border-radius: 6px;
+        background: var(--card);
+        color: var(--text);
+        font-size: 0.9rem;
+      }
+      textarea {
+        min-height: 120px;
+        resize: vertical;
+        font-family: inherit;
+      }
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+      }
+      input::placeholder,
+      textarea::placeholder {
+        color: var(--muted);
+      }
+      .row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-top: 8px;
+      }
+      .row label {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+      }
+      .row label.label-with-desc {
+        display: block;
+        align-items: stretch;
+        cursor: pointer;
+      }
+      .row label.label-with-desc .label-desc {
+        display: block;
+        margin-top: 4px;
+        margin-left: 22px;
+        font-size: 0.85em;
+        color: var(--muted);
+        line-height: 1.45;
+        max-width: 100%;
+      }
+      .row input[type="checkbox"] {
+        width: auto;
+        cursor: pointer;
+      }
+      .row select {
+        width: auto;
+        min-width: 120px;
+      }
+      pre {
+        background: #f6f8fa;
+        border: 1px solid var(--card-border);
+        border-radius: var(--radius);
+        padding: 12px;
+        font-size: 0.8rem;
+        overflow: auto;
+        margin: 8px 0 0 0;
+        color: var(--text);
+        white-space: pre-wrap;
+        word-break: break-all;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 16px;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          color 0.15s;
+      }
+      .btn-primary {
+        background: var(--primary);
+        color: #fff;
+      }
+      .btn-primary:hover {
+        background: var(--primary-hover);
+      }
+      .btn-ghost {
+        background: #f6f8fa;
+        color: var(--text);
+        border: 1px solid var(--card-border);
+      }
+      .btn-ghost:hover {
+        background: #eaeef2;
+        border-color: #d0d7de;
+      }
+      .btn-danger {
+        background: #cf222e;
+        color: #fff;
+      }
+      .btn-danger:hover {
+        background: var(--danger);
+      }
+      .btn + .btn {
+        margin-left: 8px;
+      }
+      .grid2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      @media (max-width: 560px) {
+        .grid2 {
+          grid-template-columns: 1fr;
+        }
+      }
+      .cookie-opts {
+        margin-top: 10px;
+        padding: 12px;
+        background: var(--bg);
+        border-radius: 6px;
+        border: 1px solid var(--card-border);
+      }
+      .cookie-opts label {
+        margin-top: 8px;
+      }
+      .cookie-opts label:first-of-type {
+        margin-top: 0;
+      }
+      .badge {
+        font-size: 0.75rem;
+        padding: 2px 8px;
+        border-radius: 4px;
+        background: var(--card-border);
+        color: var(--muted);
+      }
+      .badge-ok {
+        background: rgba(26, 127, 55, 0.12);
+        color: var(--success);
+      }
+      .badge-no {
+        background: rgba(207, 34, 46, 0.12);
+        color: var(--danger);
+      }
+      #appliedConfig.is-loading {
+        color: var(--primary);
+        min-height: 2.5em;
+        display: flex;
+        align-items: center;
+      }
+      pre.is-loading {
+        color: var(--primary);
+        min-height: 2.5em;
+        display: flex;
+        align-items: center;
+      }
+      .loading-spinner {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .loading-spinner::before {
+        content: "";
+        width: 18px;
+        height: 18px;
+        border: 2px solid var(--card-border);
+        border-top-color: var(--primary);
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .doc-card {
+        background: var(--card);
+        border-color: var(--card-border);
+        border-left: 3px solid var(--primary);
+      }
+      .doc-card h2 {
+        color: var(--text);
+      }
+      .doc-card h2::before {
+        background: var(--primary);
+      }
+      .doc-card .doc-body {
+        margin-top: 0;
+      }
+      .doc-card h3 {
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin: 14px 0 6px 0;
+        color: var(--text);
+      }
+      .doc-card h3:first-child {
+        margin-top: 0;
+      }
+      .doc-card ul,
+      .doc-card ol {
+        margin: 0 0 8px 0;
+        padding-left: 1.25rem;
+        font-size: 0.875rem;
+        color: var(--text);
+      }
+      .doc-card li {
+        margin: 4px 0;
+      }
+      .doc-card code {
+        background: #eaeef2;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        border: 1px solid #d0d7de;
+        color: var(--text);
+      }
+      .doc-card .api-table {
+        width: 100%;
+        font-size: 0.8rem;
+        border-collapse: collapse;
+        margin: 8px 0;
+        table-layout: fixed;
+      }
+      .doc-card .api-table th,
+      .doc-card .api-table td {
+        text-align: left;
+        padding: 8px 10px;
+        border: 1px solid var(--card-border);
+        vertical-align: top;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+      .doc-card .api-table th {
+        background: #f6f8fa;
+        color: var(--muted);
+        font-weight: 500;
+        width: 38%;
+      }
+      .doc-card .api-table.param-table th {
+        width: auto;
+      }
+      .doc-card .api-table.param-table thead th:nth-child(1) {
+        width: 18%;
+      }
+      .doc-card .api-table.param-table thead th:nth-child(2) {
+        width: 20%;
+      }
+      .doc-card .api-table.param-table thead th:nth-child(3) {
+        width: 12%;
+      }
+      .doc-card .api-table.param-table thead th:nth-child(4) {
+        width: 50%;
+      }
+      .doc-card .api-table td {
+        white-space: normal;
+        word-break: break-word;
+      }
+      .doc-card .api-table code {
+        white-space: normal;
+        word-break: break-word;
+      }
+      .doc-card .doc-link {
+        font-size: 0.875rem;
+        margin-top: 12px;
+      }
+      .doc-card .doc-link a {
+        color: var(--primary);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <h1>UtmTrack使用示例</h1>
+        <p class="sub">
+          UtmTrack 是一个用于落地页 UTM/推广参数持久化的库，支持 LocalStorage + Cookie 双写，first/last
+          归因，站内跳转不丢失。
+        </p>
+      </header>
+
+      <div class="main-layout">
+        <!-- 左列：使用说明 -->
+        <aside class="col-doc">
+          <section class="card doc-card">
+            <h2>安装与使用</h2>
+            <div class="doc-body">
+              <p class="sub" style="margin: 0 0 12px 0">
+                落地页 UTM/推广参数持久化，LocalStorage + Cookie 双写，first/last 归因，站内跳转不丢失。
+              </p>
+
+              <h3>安装</h3>
+              <pre style="margin: 0 0 12px 0; font-size: 0.8rem">npm install utm-track</pre>
+
+              <h3>快速开始 · NPM (ESM)</h3>
+              <pre style="margin: 0 0 12px 0; font-size: 0.72rem">
+import UtmTrack from 'utm-track';
+
+// 落地页：autoCapture: true 即用当前页 URL 自动捕获，无需再调 captureFromUrl()
+UtmTrack.init({
+  autoCapture: true,
+  expire: 14 * 24 * 60 * 60 * 1000,
+  strategy: 'first',
+  storage: { key: 'utm_track_promo', cookie: true },
+  onCapture: (params) => console.log('推广来源已记录', params),
+});
+
+const promo = UtmTrack.get();
+if (promo) {
+  console.log(promo.params, promo.savedAt, promo.expiresAt);
+}</pre
+              >
+
+              <h3>快速开始 · Script (UMD)</h3>
+              <pre style="margin: 0 0 12px 0; font-size: 0.72rem">
+&lt;script src="https://unpkg.com/utm-track/dist/utm-track.umd.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  UtmTrack.init({ autoCapture: true, keys: ['utm_source','utm_medium','ref'], expire: 604800000, storage: { key: 'utm_track_promo', cookie: true } });
+  // 落地页到此即可；任意页: var data = UtmTrack.get();
+&lt;/script&gt;</pre
+              >
+
+              <h3>API 速查</h3>
+              <table class="api-table">
+                <thead>
+                  <tr>
+                    <th>方法</th>
+                    <th>说明</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>init(options?)</code></td>
+                    <td>初始化配置，见下方参数表。</td>
+                  </tr>
+                  <tr>
+                    <td><code>captureFromUrl(urlOrSearch?)</code></td>
+                    <td>
+                      不传参即使用当前页 URL；传入则用该 URL/query
+                      解析并写入。若当前存储已过期会先清除旧数据再写入。返回 <code>{ wrote, reason }</code>。
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>get()</code></td>
+                    <td>读取已存推广数据，返回见下方「get() 返回值」。</td>
+                  </tr>
+                  <tr>
+                    <td><code>clear()</code></td>
+                    <td>强制清空存储（同时清 LocalStorage 与 Cookie），无参数。</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h3>init(options) 参数</h3>
+              <table class="api-table param-table">
+                <thead>
+                  <tr>
+                    <th>参数</th>
+                    <th>类型</th>
+                    <th>默认</th>
+                    <th>说明</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>storage</code></td>
+                    <td><code>{ key?, cookie? }</code></td>
+                    <td>key 默认 <code>'utm_track_promo'</code>，cookie 默认 <code>true</code></td>
+                    <td>
+                      存储配置：key 为 LocalStorage 的 key，cookie 为 false/true/对象（name、domain、path、sameSite）。
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>keys</code></td>
+                    <td><code>(string | RegExp)[]</code></td>
+                    <td>常见 UTM + ref</td>
+                    <td>要捕获的 URL 参数名：字符串精确匹配（大小写不敏感），正则可匹配 key。</td>
+                  </tr>
+                  <tr>
+                    <td><code>expire</code></td>
+                    <td><code>number</code></td>
+                    <td><code>604800000</code>（7 天）</td>
+                    <td>有效期，单位毫秒；<=0 表示不过期。</td>
+                  </tr>
+                  <tr>
+                    <td><code>strategy</code></td>
+                    <td><code>'first' | 'last'</code></td>
+                    <td><code>'first'</code></td>
+                    <td>first：有效期内不覆盖；last：每次带参访问都覆盖。</td>
+                  </tr>
+                  <tr>
+                    <td><code>captureAllQuery</code></td>
+                    <td><code>boolean</code></td>
+                    <td><code>false</code></td>
+                    <td>为 true 时：有任一 keys 匹配即存该 URL 全部 query；否则只存匹配项。</td>
+                  </tr>
+                  <tr>
+                    <td><code>onCapture</code></td>
+                    <td><code>(params) =&gt; void</code></td>
+                    <td>—</td>
+                    <td>本次写入成功后回调，用于上报/埋点。</td>
+                  </tr>
+                  <tr>
+                    <td><code>autoCapture</code></td>
+                    <td><code>boolean</code></td>
+                    <td><code>false</code></td>
+                    <td>为 true 时，init 完成后自动用当前页 URL 执行一次 captureFromUrl()，落地页只需 init 即可。</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h3>captureFromUrl 返回值</h3>
+              <table class="api-table param-table">
+                <thead>
+                  <tr>
+                    <th>字段</th>
+                    <th>类型</th>
+                    <th>说明</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>wrote</code></td>
+                    <td><code>boolean</code></td>
+                    <td>本次是否写入存储。</td>
+                  </tr>
+                  <tr>
+                    <td><code>reason</code></td>
+                    <td><code>string</code></td>
+                    <td>
+                      <code>'no_params'</code> 无匹配参数；<code>'written'</code> 已写入；<code
+                        >'skipped_first_touch'</code
+                      >
+                      有效期内未覆盖（first 策略）。
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h3>get() 返回值</h3>
+              <table class="api-table param-table">
+                <thead>
+                  <tr>
+                    <th>字段</th>
+                    <th>类型</th>
+                    <th>说明</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>params</code></td>
+                    <td><code>object</code></td>
+                    <td>捕获到的参数键值对。</td>
+                  </tr>
+                  <tr>
+                    <td><code>url</code></td>
+                    <td><code>string</code></td>
+                    <td>捕获时的完整落地页 URL。</td>
+                  </tr>
+                  <tr>
+                    <td><code>savedAt</code></td>
+                    <td><code>number</code></td>
+                    <td>写入时间戳（毫秒）。</td>
+                  </tr>
+                  <tr>
+                    <td><code>expiresAt</code></td>
+                    <td><code>number</code></td>
+                    <td>过期时间戳（毫秒）；init 的 expire<=0 时为 <code>Infinity</code>（永不过期）。</td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" style="font-size: 0.75rem; color: var(--muted)">
+                      过期或不存在时返回 <code>null</code>。
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h3>存储结构（LocalStorage / Cookie 双写同一 JSON）</h3>
+              <pre style="margin: 0; font-size: 0.75rem">
+{
+  "params": { "utm_source": "google", "utm_medium": "cpc", ... },
+  "url": "https://example.com/landing?utm_source=...",
+  "savedAt": 1710672000000,
+  "expiresAt": 1711276800000
+}</pre
+              >
+              <p class="sub" style="margin: 6px 0 0 0; font-size: 0.8rem">
+                url 为捕获时的完整落地 URL；Cookie 约 4KB 限制，超限则仅 LS 有效。
+              </p>
+
+              <p class="doc-link">
+                右侧为本库的可交互演示。完整 API、清空/自定义参数/仅用 LS 等见
+                <a href="../README.md" target="_blank" rel="noopener">README.md</a>。
+              </p>
+            </div>
+          </section>
+        </aside>
+
+        <!-- 右列：演示 -->
+        <div class="col-demo">
+          <!-- 配置表单：修改后需点击「应用配置」才生效 -->
+          <section class="card">
+            <h2>配置表单（修改后点击「应用配置」生效）</h2>
+            <label>keys（要捕获的 URL 参数名，一行一个；支持正则，如 /utm_.+/ 或 /^ref$/i）</label>
+            <textarea id="paramKeys" spellcheck="false" placeholder="utm_source&#10;/utm_.+/&#10;ref">
+utm_source
+utm_medium
+utm_campaign
+utm_content
+utm_term
+ref</textarea
+            >
+            <label>storage.key（LocalStorage key）</label>
+            <input
+              type="text"
+              id="storageKey"
+              spellcheck="false"
+              value="utm_track_promo"
+              placeholder="utm_track_promo"
+            />
+            <label>expire（有效期，单位毫秒；不填默认 7 天，<=0 表示不过期）</label>
+            <input type="number" id="expire" placeholder="604800000 或 0" />
+            <label>归因策略 strategy</label>
+            <select id="strategy">
+              <option value="first">first（有效期内不覆盖）</option>
+              <option value="last">last（每次带参都覆盖）</option>
+            </select>
+            <div class="row" style="margin-top: 12px">
+              <label class="label-with-desc">
+                <span><input type="checkbox" id="captureAllQuery" /> 捕获全部 query（captureAllQuery）</span>
+                <span class="label-desc"
+                  >开启后，只要 URL 有任一 keys 匹配就存该 URL 的<strong>全部</strong> query；否则只存匹配项。</span
+                >
+              </label>
+            </div>
+            <div class="row" style="margin-top: 14px">
+              <label><input type="checkbox" id="cookieEnabled" checked /> storage.cookie（双写 Cookie）</label>
+            </div>
+            <div id="cookieOpts" class="cookie-opts">
+              <label>storage.cookie.name</label>
+              <input type="text" id="cookieName" spellcheck="false" value="utm_promo" placeholder="utm_promo" />
+              <label>Cookie domain（可选，如 .example.com）</label>
+              <input type="text" id="cookieDomain" spellcheck="false" placeholder="不填则当前域" />
+              <label>Cookie path</label>
+              <input type="text" id="cookiePath" spellcheck="false" value="/" placeholder="/" />
+              <label>SameSite</label>
+              <select id="cookieSameSite">
+                <option value="lax">lax</option>
+                <option value="strict">strict</option>
+                <option value="none">none</option>
+              </select>
+            </div>
+            <div class="row" style="margin-top: 12px">
+              <label><input type="checkbox" id="onCaptureLog" checked /> 写入时在控制台打印 onCapture(params)</label>
+            </div>
+            <div style="margin-top: 16px">
+              <button type="button" id="btnApply" class="btn btn-primary">应用配置并重新 init</button>
+            </div>
+          </section>
+
+          <!-- 当前已生效的配置（与上方表单对比可确认是否生效） -->
+          <section class="card">
+            <h2>当前已生效的配置</h2>
+            <p class="sub" style="margin: 0 0 8px 0">
+              以下为上次点击「应用配置」后实际生效的 init 参数，可与上方表单对比确认。
+            </p>
+            <pre id="appliedConfig" class="is-loading"><span class="loading-spinner">加载中</span></pre>
+          </section>
+
+          <!-- 当前状态 -->
+          <section class="card">
+            <h2>当前状态</h2>
+            <label>当前页面 URL</label>
+            <pre id="currentUrl"></pre>
+            <label>最近一次捕获结果（captureFromUrl 返回值：无匹配参数 / 已写入 / 有效期内未覆盖）</label>
+            <pre id="captureResult">-</pre>
+            <label>当前存储内容 get()（含 params、url、savedAt、expiresAt）</label>
+            <pre id="storageContent">-</pre>
+          </section>
+
+          <!-- 模拟与操作 -->
+          <section class="card">
+            <h2>模拟与操作</h2>
+            <p class="sub" style="margin: 0 0 12px 0">
+              <strong>模拟落地并捕获</strong>：用下方 URL 执行一次 captureFromUrl，可能写入存储（含 params、url
+              等）。<br /><strong>读取并刷新展示</strong>：不刷新页面，仅重新读取存储与当前 URL
+              并更新下方展示（不重新执行 init/捕获）。<br />直接刷新整页也会看到最新状态，但会重新执行 init 和
+              captureFromUrl。
+            </p>
+            <label>模拟落地 URL（留空则用当前页 URL；或输入完整 URL / ?utm_source=xx）</label>
+            <input
+              type="text"
+              id="simulateUrl"
+              spellcheck="false"
+              value="?utm_source=baidu&ref=test"
+              placeholder="?utm_source=baidu&ref=test"
+            />
+            <div style="margin-top: 12px">
+              <button type="button" id="btnSimulate" class="btn btn-primary">模拟落地并捕获</button>
+              <button type="button" id="btnRefresh" class="btn btn-ghost">读取并刷新展示</button>
+              <button type="button" id="btnClear" class="btn btn-danger">强制清空</button>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <script src="../dist/utm-track.umd.js"></script>
+    <script>
+      function parseParamKeyLine(line) {
+        var s = line.trim();
+        if (!s) return null;
+        if (s.length >= 2 && s.charAt(0) === "/" && s.lastIndexOf("/") > 0) {
+          var body = s.slice(1, s.lastIndexOf("/"));
+          var flags = s.slice(s.lastIndexOf("/") + 1);
+          try {
+            return new RegExp(body, flags);
+          } catch (e) {
+            return s;
+          }
+        }
+        return s;
+      }
+      function getConfigFromForm() {
+        var keysStr = document.getElementById("paramKeys").value.trim();
+        var keys = keysStr ? keysStr.split(/\r?\n/).map(parseParamKeyLine).filter(Boolean) : undefined;
+        var expireVal = document.getElementById("expire").value.trim();
+        var expire = expireVal ? parseInt(expireVal, 10) : undefined;
+        var cookieEnabled = document.getElementById("cookieEnabled").checked;
+        var cookie = cookieEnabled
+          ? {
+              name: document.getElementById("cookieName").value.trim() || undefined,
+              domain: document.getElementById("cookieDomain").value.trim() || undefined,
+              path: document.getElementById("cookiePath").value.trim() || undefined,
+              sameSite: document.getElementById("cookieSameSite").value,
+            }
+          : false;
+        var keyVal = document.getElementById("storageKey").value.trim();
+        return {
+          keys: keys,
+          storage: {
+            key: keyVal || undefined,
+            cookie: cookie,
+          },
+          expire: expire,
+          strategy: document.getElementById("strategy").value,
+          captureAllQuery: document.getElementById("captureAllQuery").checked,
+          onCapture: document.getElementById("onCaptureLog").checked
+            ? function (params) {
+                console.log("[utm-track] onCapture", params);
+              }
+            : undefined,
+        };
+      }
+
+      function captureResultText(res) {
+        if (!res || typeof res.wrote === "undefined") return "-";
+        var t = {
+          no_params: "无匹配参数（当前 URL 无配置的 keys 匹配项）",
+          written: "已写入（新记录或已过期后覆盖）",
+          skipped_first_touch: "有效期内已有记录，未覆盖（first 策略）",
+        };
+        return (t[res.reason] || res.reason) + "\nwrote: " + res.wrote;
+      }
+      function formatAppliedConfig(opts) {
+        if (!opts) return "-";
+        var display = {
+          keys: opts.keys
+            ? opts.keys.map(function (p) {
+                return typeof p === "string" ? p : p instanceof RegExp ? p.toString() : String(p);
+              })
+            : undefined,
+          storage: opts.storage,
+          expire: opts.expire,
+          strategy: opts.strategy,
+          captureAllQuery: opts.captureAllQuery,
+          onCapture: opts.onCapture ? true : false,
+        };
+        return JSON.stringify(display, null, 2);
+      }
+      function showAppliedConfigLoading() {
+        var el = document.getElementById("appliedConfig");
+        el.innerHTML = '<span class="loading-spinner">加载中</span>';
+        el.classList.add("is-loading");
+      }
+      function showAppliedConfig(opts) {
+        var el = document.getElementById("appliedConfig");
+        el.classList.remove("is-loading");
+        el.textContent = opts ? formatAppliedConfig(opts) : "-";
+      }
+      function applyConfig() {
+        showAppliedConfigLoading();
+        var opts = getConfigFromForm();
+        var minLoadingMs = 400;
+        var start = Date.now();
+        requestAnimationFrame(function doApply() {
+          var elapsed = Date.now() - start;
+          if (elapsed < minLoadingMs) {
+            setTimeout(function () {
+              UtmTrack.init(opts);
+              showAppliedConfig(opts);
+              showStorage();
+              document.getElementById("captureResult").textContent = "-";
+            }, minLoadingMs - elapsed);
+          } else {
+            UtmTrack.init(opts);
+            showAppliedConfig(opts);
+            showStorage();
+            document.getElementById("captureResult").textContent = "-";
+          }
+        });
+      }
+
+      function showUrl() {
+        var el = document.getElementById("currentUrl");
+        el.classList.remove("is-loading");
+        el.textContent = window.location.href;
+      }
+      function showStorage() {
+        var data = UtmTrack.get();
+        var el = document.getElementById("storageContent");
+        el.classList.remove("is-loading");
+        el.textContent = data ? JSON.stringify(data, null, 2) : "null（已过期或未写入）";
+      }
+
+      // 初始应用一次配置再捕获
+      applyConfig();
+      var captureRes = UtmTrack.captureFromUrl();
+      document.getElementById("captureResult").textContent = captureResultText(captureRes);
+      showUrl();
+      showStorage();
+
+      var minLoadingMs = 400;
+      function showBlockLoading(elId, spinnerHtml) {
+        var el = document.getElementById(elId);
+        el.innerHTML = spinnerHtml || '<span class="loading-spinner">加载中</span>';
+        el.classList.add("is-loading");
+      }
+      function clearBlockLoading(elId, content) {
+        var el = document.getElementById(elId);
+        el.classList.remove("is-loading");
+        el.textContent = content;
+      }
+      function buttonFeedback(btn, tempText, restoreText) {
+        btn.textContent = tempText;
+        setTimeout(function () {
+          btn.textContent = restoreText;
+        }, 400);
+      }
+      document.getElementById("btnApply").onclick = function () {
+        applyConfig();
+        buttonFeedback(document.getElementById("btnApply"), "已应用", "应用配置并重新 init");
+      };
+      document.getElementById("btnSimulate").onclick = function () {
+        var btn = document.getElementById("btnSimulate");
+        showBlockLoading("captureResult");
+        showBlockLoading("storageContent");
+        buttonFeedback(btn, "已执行", "模拟落地并捕获");
+        var raw = document.getElementById("simulateUrl").value.trim();
+        var start = Date.now();
+        setTimeout(function () {
+          var res = raw
+            ? UtmTrack.captureFromUrl(raw.indexOf("?") === 0 ? raw : raw.indexOf("?") >= 0 ? raw : "?" + raw)
+            : UtmTrack.captureFromUrl();
+          clearBlockLoading("captureResult", captureResultText(res));
+          showStorage();
+        }, minLoadingMs);
+      };
+      document.getElementById("btnRefresh").onclick = function () {
+        var btn = document.getElementById("btnRefresh");
+        showBlockLoading("currentUrl");
+        showBlockLoading("captureResult");
+        showBlockLoading("storageContent");
+        buttonFeedback(btn, "已刷新", "读取并刷新展示");
+        var start = Date.now();
+        setTimeout(function () {
+          showUrl();
+          clearBlockLoading("captureResult", "-");
+          showStorage();
+        }, minLoadingMs);
+      };
+      document.getElementById("btnClear").onclick = function () {
+        var btn = document.getElementById("btnClear");
+        showBlockLoading("captureResult");
+        showBlockLoading("storageContent");
+        buttonFeedback(btn, "已清空", "强制清空");
+        setTimeout(function () {
+          UtmTrack.clear();
+          clearBlockLoading("captureResult", "-");
+          showStorage();
+        }, minLoadingMs);
+      };
+    </script>
+  </body>
+</html>

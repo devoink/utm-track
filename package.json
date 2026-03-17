@@ -1,0 +1,41 @@
+{
+  "name": "utm-track",
+  "version": "0.0.1-alpha",
+  "description": "Landing page UTM / promo params persistence with LocalStorage + Cookie dual-write, first/last touch strategy",
+  "main": "dist/utm-track.esm.js",
+  "module": "dist/utm-track.esm.js",
+  "unpkg": "dist/utm-track.umd.min.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "npx tsc --emitDeclarationOnly && npx rollup -c && npx terser dist/utm-track.umd.js -o dist/utm-track.umd.min.js -c -m",
+    "build:watch": "npx rollup -c -w",
+    "prepublishOnly": "npm run build",
+    "example": "npm run build && npx serve . -p 3000",
+    "dev": "npx live-server . --port=3000 --open=/examples/index.html",
+    "release": "node scripts/release.js"
+  },
+  "keywords": [
+    "utm",
+    "tracking",
+    "landing",
+    "attribution",
+    "localstorage",
+    "cookie",
+    "first-touch",
+    "last-touch"
+  ],
+  "author": "devo<devo@devo.ink>",
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "live-server": "^1.2.2",
+    "rollup": "^4.9.0",
+    "terser": "^5.27.0",
+    "tslib": "^2.8.1",
+    "typescript": "^5.3.0"
+  }
+}
